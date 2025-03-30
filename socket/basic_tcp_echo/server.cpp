@@ -11,7 +11,7 @@ int main() {
     int serverSocket, clientSocket;
     sockaddr_in serverAddr, clientAddr;             //IP주소와 포트번호를 저장해주는 구조체
     socklen_t clientAddrSize = sizeof(clientAddr);  //client의 socket 주소는 변하기 때문에 따로 지정
-    char buffer[BUFFER_SIZE];                       //데이터를 담을 버퍼
+    char buffer[BUFFER_SIZE];                      
 
     std::cout << "> echo server is activated" << std::endl;
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -19,6 +19,7 @@ int main() {
         std::cerr << "Error: socket creation falied" << std::endl;
         return 1;
     }
+    
     memset(&serverAddr, 0, sizeof(serverAddr)); //serverAddr 구조체의 메모리 쓰레기값 정리 후 configure하는 4줄
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;    //자신의 32bit IP 할당, 랜카드가 하나일 때 INADDR_ANY
