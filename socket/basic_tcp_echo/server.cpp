@@ -10,7 +10,7 @@
 int main() {
     int serverSocket, clientSocket;
     sockaddr_in serverAddr, clientAddr;             //IP주소와 포트번호를 저장해주는 구조체
-    socklen_t clientAddrSize = sizeof(clientAddr);  //client의 socket 주소는 변하기 때문에 따로 지정
+    socklen_t clientAddrSize = sizeof(clientAddr);  //socklen_t clientAddrSize=>os가 accept()를 실행하면서 가변의 클라주소를 업데이트
     char buffer[BUFFER_SIZE];                      
 
     std::cout << "> echo server is activated" << std::endl;
@@ -25,7 +25,7 @@ int main() {
     serverAddr.sin_addr.s_addr = INADDR_ANY;    //자신의 32bit IP 할당, 랜카드가 하나일 때 INADDR_ANY
     serverAddr.sin_port = htons(PORT);          //포트번호를 16bit 빅엔디안 형식으로 설정
 
-    if(bind(serverSocket, (sockaddr*) &serverAddr, sizeof(serverAddr)) == -1) {
+    if(bind(serverSocket, (sockaddr*) &serverAddr, sizeof(serverAddr)) == -1) {    
         std::cerr << "Error: bind falied" << std::endl;
         close(serverSocket);
         return 1;
@@ -62,3 +62,6 @@ int main() {
 
     return 0;
 }
+
+
+//client의 정보는 server와 달리 대부분 가변적이기에 pointer로 전달한다.
